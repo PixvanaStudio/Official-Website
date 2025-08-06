@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixvana Studio - Agensi Fotografi & Videografi Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-in-out;
+        }
+        
+        .page-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            color: #374151;
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #374151;
+        }
+        
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .price-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .price-card:hover {
+            border-color: #374151;
+            transform: scale(1.02);
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">Pixvana</h1>
+                    <span class="ml-2 text-sm text-gray-500">Studio</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="nav-item active text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('home')">Beranda</a>
+                        <a href="#" class="nav-item text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('portfolio')">Portofolio</a>
+                        <a href="#" class="nav-item text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('services')">Jenis Foto</a>
+                        <a href="#" class="nav-item text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('pricing')">Harga</a>
+                        <a href="#" class="nav-item text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('catalog')">Katalog</a>
+                        <a href="#" class="nav-item text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium cursor-pointer" onclick="showPage('about')">Tentang</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('home'); toggleMobileMenu()">Beranda</a>
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('portfolio'); toggleMobileMenu()">Portofolio</a>
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('services'); toggleMobileMenu()">Jenis Foto</a>
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('pricing'); toggleMobileMenu()">Harga</a>
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('catalog'); toggleMobileMenu()">Katalog</a>
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900" onclick="showPage('about'); toggleMobileMenu()">Tentang</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page-section active">
+        <!-- Hero Section -->
+        <section class="hero-bg py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                        Abadikan Momen
+                        <span class="text-gray-600">Terbaik Anda</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                        Kami adalah agensi fotografi dan videografi profesional yang menghadirkan karya visual berkualitas tinggi untuk setiap momen berharga dalam hidup Anda.
+                    </p>
+                    <div class="space-x-4">
+                        <button onclick="showPage('portfolio')" class="bg-gray-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Lihat Portofolio
+                        </button>
+                        <button onclick="showPage('pricing')" class="border-2 border-gray-900 text-gray-900 px-8 py-3 rounded-lg font-medium hover:bg-gray-900 hover:text-white transition duration-300">
+                            Lihat Harga
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih Kami?</h2>
+                    <p class="text-xl text-gray-600">Pengalaman dan kualitas yang terpercaya</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="service-card text-center p-8 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Kualitas Profesional</h3>
+                        <p class="text-gray-600">Menggunakan peralatan terdepan dan teknik fotografi terkini untuk hasil yang memukau.</p>
+                    </div>
+                    <div class="service-card text-center p-8 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Tepat Waktu</h3>
+                        <p class="text-gray-600">Komitmen penuh terhadap jadwal dan deadline yang telah disepakati bersama.</p>
+                    </div>
+                    <div class="service-card text-center p-8 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Pelayanan Terbaik</h3>
+                        <p class="text-gray-600">Tim yang berpengalaman dan ramah siap memberikan pelayanan terbaik untuk Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page-section">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Portofolio Kami</h1>
+                    <p class="text-xl text-gray-600">Koleksi karya terbaik dari berbagai kategori</p>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="flex justify-center mb-12">
+                    <div class="flex space-x-4 bg-gray-100 p-2 rounded-lg">
+                        <button onclick="filterGallery('all')" class="filter-btn active px-6 py-2 rounded-md font-medium transition duration-300">Semua</button>
+                        <button onclick="filterGallery('wedding')" class="filter-btn px-6 py-2 rounded-md font-medium transition duration-300">Pernikahan</button>
+                        <button onclick="filterGallery('portrait')" class="filter-btn px-6 py-2 rounded-md font-medium transition duration-300">Portrait</button>
+                        <button onclick="filterGallery('event')" class="filter-btn px-6 py-2 rounded-md font-medium transition duration-300">Event</button>
+                        <button onclick="filterGallery('commercial')" class="filter-btn px-6 py-2 rounded-md font-medium transition duration-300">Komersial</button>
+                    </div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="gallery-item wedding" data-category="wedding">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/_EMM6769.JPG" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Pernikahan Elegant</h3>
+                            <p class="text-gray-600">Dokumentasi pernikahan dengan konsep klasik dan elegan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item portrait" data-category="portrait">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/IMG_0664.JPG" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Portrait Professional</h3>
+                            <p class="text-gray-600">Sesi foto portrait untuk kebutuhan profesional</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item event" data-category="event">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/_EMM5994.JPG" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Corporate Event</h3>
+                            <p class="text-gray-600">Dokumentasi acara perusahaan dan gathering</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item commercial" data-category="commercial">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/_EMM9274.png" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Product Photography</h3>
+                            <p class="text-gray-600">Foto produk untuk kebutuhan komersial dan marketing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item wedding" data-category="wedding">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/images.jpeg" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Pre-Wedding Session</h3>
+                            <p class="text-gray-600">Sesi foto pre-wedding dengan konsep outdoor</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item portrait" data-category="portrait">
+                        <div class="bg-gray-200 rounded-xl overflow-hidden h-64 flex items-center justify-center">
+                            <img src="file:///C:/Users/User/Documents/gambar/images%20(1).jpeg" alt="laptop">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Family Portrait</h3>
+                            <p class="text-gray-600">Foto keluarga dengan suasana hangat dan natural</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page-section">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Jenis Layanan Fotografi</h1>
+                    <p class="text-xl text-gray-600">Berbagai jenis fotografi profesional untuk setiap kebutuhan</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="service-card bg-gray-50 p-8 rounded-xl">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Fotografi Pernikahan</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Dokumentasi lengkap hari bahagia Anda dengan gaya yang elegan dan natural. Meliputi sesi akad, resepsi, dan momen-momen berharga lainnya.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Dokumentasi akad nikah</li>
+                            <li>• Foto resepsi dan pesta</li>
+                            <li>• Sesi pre-wedding</li>
+                            <li>• Album pernikahan premium</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-8 rounded-xl">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Portrait Photography</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Sesi foto portrait profesional untuk berbagai kebutuhan, dari foto profil hingga foto keluarga dengan kualitas studio.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Portrait individual</li>
+                            <li>• Foto keluarga</li>
+                            <li>• Headshot profesional</li>
+                            <li>• Maternity photography</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-8 rounded-xl">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Event Photography</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Dokumentasi acara perusahaan, gathering, seminar, dan berbagai event dengan hasil yang profesional dan berkualitas tinggi.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Corporate event</li>
+                            <li>• Seminar dan workshop</li>
+                            <li>• Gathering perusahaan</li>
+                            <li>• Peluncuran produk</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-8 rounded-xl">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Commercial Photography</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Fotografi komersial untuk kebutuhan bisnis, termasuk foto produk, katalog, dan materi marketing dengan standar industri.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Product photography</li>
+                            <li>• Katalog produk</li>
+                            <li>• Food photography</li>
+                            <li>• Architecture photography</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Pricing Page -->
+    <div id="pricing" class="page-section">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Paket Harga</h1>
+                    <p class="text-xl text-gray-600">Pilih paket yang sesuai dengan kebutuhan Anda</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Basic Package -->
+                    <div class="price-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Paket Basic</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">Rp 1jt</div>
+                            <p class="text-gray-600">Cocok untuk acara kecil</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                4 jam sesi foto
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                50 foto terbaik (edited)
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                1 fotografer
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                File digital (Google Drive)
+                            </li>
+                        </ul>
+                        <button class="w-full bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pilih Paket
+                        </button>
+                    </div>
+                    
+                    <!-- Premium Package -->
+                    <div class="price-card bg-gray-900 text-white p-8 rounded-xl shadow-lg transform scale-105">
+                        <div class="text-center mb-8">
+                            <div class="bg-white text-gray-900 text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">POPULER</div>
+                            <h3 class="text-2xl font-bold mb-2">Paket Premium</h3>
+                            <div class="text-4xl font-bold mb-2">Rp 2.5jt</div>
+                            <p class="text-gray-300">Pilihan terbaik</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                8 jam sesi foto
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                150 foto terbaik (edited)
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                2 fotografer
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Album foto premium
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Video highlight (3 menit)
+                            </li>
+                        </ul>
+                        <button class="w-full bg-white text-gray-900 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                            Pilih Paket
+                        </button>
+                    </div>
+                    
+                    <!-- Platinum Package -->
+                    <div class="price-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Paket Platinum</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">Rp 5jt</div>
+                            <p class="text-gray-600">Paket lengkap premium</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Full day coverage
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                300+ foto terbaik (edited)
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                3 fotografer + videografer
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Album foto luxury + frame
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Video cinematic (10 menit)
+                            </li>
+                        </ul>
+                        <button class="w-full bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pilih Paket
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+
+    <!-- Catalog Page -->
+    <div id="catalog" class="page-section">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Katalog Produk & Layanan</h1>
+                    <p class="text-xl text-gray-600">Produk dan layanan tambahan untuk melengkapi kebutuhan Anda</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Foto Produk</h3>
+                        <p class="text-gray-600 mb-4">Foto Produk berkualitas tinggi dengan konsep sesuai keinginan klien .</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 500rb</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Foto Shoot</h3>
+                        <p class="text-gray-600 mb-4">Foto Shoot perorangan/grup sesuai keinginan Anda.</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 150rb</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Video Cinematic</h3>
+                        <p class="text-gray-600 mb-4">Video cinematic dengan kualitas 1080p - 4K dan editing profesional.</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 500rb-1.5jt</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Cetak Foto</h3>
+                        <p class="text-gray-600 mb-4">Cetak foto berbagai-macam ukuran dengan kualitas HD untuk display.</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 15rb-200rb</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Lighting Equipment</h3>
+                        <p class="text-gray-600 mb-4">Sewa peralatan lighting profesional untuk kebutuhan foto studio.</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 150rb/hari</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Sewa Sekarang
+                        </button>
+                    </div>
+                    
+                    <div class="service-card bg-gray-50 p-6 rounded-xl">
+                        <div class="w-full h-48 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Pembuatan Konten</h3>
+                        <p class="text-gray-600 mb-4">Video konten profesional dengan kualitas terbaik sesuai konsep yang anda inginkan.</p>
+                        <div class="text-2xl font-bold text-gray-900 mb-4">Rp 200rb</div>
+                        <button class="w-full bg-gray-900 text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-300">
+                            Buat Gallery
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page-section">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Tentang Pixvana Studio</h1>
+                    <p class="text-xl text-gray-600">Passion kami adalah mengabadikan momen berharga dalam hidup Anda</p>
+                </div>
+                
+                <!-- Company Story -->
+                <div class="mb-20">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-6">Cerita Kami</h2>
+                            <p class="text-gray-600 mb-6">
+                                Pixvana Studio didirikan pada tahun 2025 dengan misi untuk menghadirkan layanan fotografi dan videografi berkualitas tinggi. Kami percaya bahwa setiap momen memiliki cerita yang unik dan layak untuk diabadikan dengan sempurna.
+                            </p>
+                            <p class="text-gray-600 mb-6">
+                                Dengan pengalaman 7 Bulan di industri kreatif, kami telah melayani puluhan klien dari berbagai kalangan, mulai dari pasangan yang merayakan hari bahagia mereka hingga perusahaan besar yang membutuhkan dokumentasi profesional.
+                            </p>
+                            <p class="text-gray-600">
+                                Tim kami terdiri dari fotografer dan videografer berpengalaman yang tidak hanya menguasai teknik, tetapi juga memiliki mata artistik untuk menangkap emosi dan momen yang autentik.
+                            </p>
+                        </div>
+                        <div class="bg-gray-200 rounded-xl h-96 flex items-center justify-center">
+                            <svg class="w-24 h-24 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="mb-20">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Tim Profesional Kami</h2>
+                        <p class="text-xl text-gray-600">Bertemu dengan para ahli di balik setiap karya yang kami hasilkan</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="team-card text-center">
+                            <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="file:///C:/Users/User/Documents/gambar/IMG_9774.PNG" alt="laptop">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Sabda Zelmy</h3>
+                            <p class="text-gray-600 mb-4">Lead Videographer,Video Editor & Founder</p>
+                            <p class="text-gray-600 text-sm">Berpengalaman 4+ tahun dalam videografi cinematic dan editing. Telah menangani lebih dari 200 project video dengan berbagai konsep kreatif dan inovatif.</p>
+                        </div>
+                        
+                        <div class="team-card text-center">
+                            <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="file:///C:/Users/User/Documents/gambar/IMG_9775.PNG" alt=laptop">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Evinda Maulana</h3>
+                            <p class="text-gray-600 mb-4">Senior Photographer</p>
+                            <p class="text-gray-600 text-sm">Berpengalaman 5+ tahun dalam fotografi pernikahan dan portrait.Telah menangani lebih dari 150 project dengan spesialisasi fotografi komersial.</p>
+                        </div>
+                        
+                        <div class="team-card text-center">
+                            <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="file:///C:/Users/User/Documents/gambar/IMG_9773.PNG" alt="laptop">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Rois Rovil</h3>
+                            <p class="text-gray-600 mb-4">Profesional Editor</p>
+                            <p class="text-gray-600 text-sm">Bertanggung jawab atas konsep kreatif,art direction dan Editor Photography. Background pendidikan desain grafis dengan pengalaman 4 tahun di industri kreatif.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Values Section -->
+                <div class="bg-gray-50 rounded-2xl p-12">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Nilai-Nilai Kami</h2>
+                        <p class="text-xl text-gray-600">Prinsip yang memandu setiap karya yang kami hasilkan</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Kualitas</h3>
+                            <p class="text-gray-600 text-sm">Komitmen pada standar kualitas tertinggi dalam setiap hasil karya</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Passion</h3>
+                            <p class="text-gray-600 text-sm">Cinta dan dedikasi penuh terhadap seni fotografi dan videografi</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Kolaborasi</h3>
+                            <p class="text-gray-600 text-sm">Bekerja sama dengan klien untuk mewujudkan visi yang sempurna</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Inovasi</h3>
+                            <p class="text-gray-600 text-sm">Selalu mengikuti perkembangan teknologi dan tren terbaru</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Pixvana Studio</h3>
+                    <p class="text-gray-300 mb-4">Mengabadikan momen terbaik dengan kualitas profesional dan sentuhan artistik yang memukau.</p>
+                    <div class="flex space-x-4">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                            <span class="text-xs">IG</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                            <span class="text-xs">FB</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                            <span class="text-xs">WA</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Layanan</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition duration-300">Fotografi Pernikahan</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Portrait Photography</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Event Photography</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Commercial Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>📧 PixvanaStudio.com</li>
+                        <li>📱 +62 822-9502-6445</li>
+                        <li>📍 Tasikmalaya, Indonesia</li>
+                        <li>🕒 Sen-Jum: 09:00-17:00</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-300 mb-4">Dapatkan tips fotografi dan update terbaru dari kami.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Email Anda" class="flex-1 px-4 py-2 rounded-l-lg text-gray-900">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-r-lg font-medium hover:bg-gray-100 transition duration-300">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 Pixvana Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page with animation
+            setTimeout(() => {
+                document.getElementById(pageId).classList.add('active');
+            }, 100);
+            
+            // Update navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the corresponding nav item
+            const activeNavItem = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeNavItem) {
+                activeNavItem.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+        
+        // Gallery Filter
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-gray-900', 'text-white');
+                btn.classList.add('text-gray-600');
+            });
+            
+            event.target.classList.add('active', 'bg-gray-900', 'text-white');
+            event.target.classList.remove('text-gray-600');
+            
+            // Filter items
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    item.style.opacity = '0';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, 100);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+        
+        // Smooth scrolling for internal links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation to elements when they come into view
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements that should animate
+            const animateElements = document.querySelectorAll('.service-card, .gallery-item, .price-card, .team-card');
+            animateElements.forEach(el => observer.observe(el));
+        });
+        
+        // Add hover effects to buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b0322cb3de6ba5',t:'MTc1NDUwMDczMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
